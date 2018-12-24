@@ -1,6 +1,12 @@
+"""
+This module uses multiple sentiment analysis functions and returns a
+consolidated result
+"""
+
 from afinn import Afinn
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-	
+
+
 def get_afinn_score(line):
     """
     AFINN is a list of English words rated for valence with an integer
@@ -8,44 +14,53 @@ def get_afinn_score(line):
     """
 
     afinn = Afinn()
-    score = afinn.score(line)    
+    score = afinn.score(line)
 
-    sentiment = ''
+    sentiment = ""
     if score >= 1.5:
-        sentiment = 'Positive'
+        sentiment = "Positive"
     else:
-        if (score > - 1.5) and (score < 1.5):
-            sentiment = 'Neutral'
+        if -1.5 < score < 1.5:
+            sentiment = "Neutral"
         else:
-            sentiment = 'Negative'		
-		
+            sentiment = "Negative"
+
     return sentiment
-	
-def get_NLTK_score(line):
+
+
+def get_nltk_score(line):
     """
 	Use NLTK Vader (Valence Aware Dictionary and sEntiment Reasoner)
 	"""
-	
+
     analyser = SentimentIntensityAnalyzer()
     snt = analyser.polarity_scores(line)
-    score = float(snt['compound'])
-    sentiment = ''
+    score = float(snt["compound"])
+    sentiment = ""
     if score >= 0.5:
-        sentiment = 'Positive'
+        sentiment = "Positive"
     else:
-        if (score > - 0.5) and (score < 0.5):
-            sentiment = 'Neutral'
+        if -0.5 < score < 0.5:
+            sentiment = "Neutral"
         else:
-            sentiment = 'Negative'		
-		
+            sentiment = "Negative"
+
     return sentiment
 
-def get_sentiment(line):
-    afinn_score = get_afinn_score(line)    
-    NLTK_score = get_NLTK_score(line)	
 
-	#If the scores are in agreement, return the afinn score. Otherwise return 'neutral' if they disagree
-    if afinn_score == NLTK_score:
-        return afinn_score
+def get_sentiment(line):
+    """
+	This function calls the nltk and spacy sentiment analysis functions
+	"""
+    afinn_score = get_afinn_score(line)
+    nltk_score = get_nltk_score(line)
+    final_score = ""
+
+    # If the scores are in agreement, return the afinn score. Otherwise
+    # return 'neutral' if they disagree
+    if afinn_score == nltk_score:
+        final_score = afinn_score
     else:
-        return 'Neutral'
+        final_score = "Neutral"
+
+    return final_score

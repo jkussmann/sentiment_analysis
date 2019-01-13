@@ -67,6 +67,19 @@ Enter a sentence: end
 Ending Program ...
 ```
 
+## Testing
+
+To run unit tests on the code, open a command line window and change to the directory where the code is located.
+
+```
+C:\sentiment_analysis>python test_sa_unittest.py
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 0.142s
+
+OK
+```
+
 ## Author
 
 * **John Kussmann** - *Initial work*

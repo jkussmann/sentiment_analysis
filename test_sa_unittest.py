@@ -10,9 +10,9 @@ from sentiment_analysis import (
 )
 
 
-class TestNP(unittest.TestCase):
+class TestSA(unittest.TestCase):
     """
-    Class for testing noun phrase tagging functions
+    Class for testing sentiment analysis
     """
 
     def test_afinn_positive(self):
